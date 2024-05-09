@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do list App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="todo">
+            <h2>To-Do list <img src="images/icon.png" alt="image is loading"></h2>
+            <div class="search">
+                <input type="text" placeholder="Add your task">
+                <button class="add-btn" ">Add</button>
+            </div>
+            <ul class="listdata">
+                <!-- <li class="checked">task-1</li>
+                <li class="checked">task-2</li>
+                <li class="checked">task-3</li> -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let inputVal=document.querySelector(".search input");
+        let btn=document.querySelector(".search button");
+        let listData=document.querySelector(".listdata");
+        btn.addEventListener("click",()=>{
+            if(inputVal.value===""){
+                alert("Please enter any input value");
+            }
+            else{
+                let lis = document.createElement('li');
+                lis.innerHTML=inputVal.value;
+                listData.appendChild(lis);
+                let span=document.createElement("span");
+                span.textContent="\u00d7";
+                lis.appendChild(span);
+            }
+            inputVal.value="";
+            saveData();
+
+        })
+
+        listData.addEventListener("click",function(e){
+                if(e.target.tagName==="LI"){
+                    e.target.classList.toggle("checked");
+                    saveData();
+                }
+                else if(e.target.tagName==="SPAN"){
+                    e.target.parentElement.remove();
+                    saveData();
+                }
+        })
+        function saveData(){
+            localStorage.setItem("data",listData.innerHTML);
+        }
+        function showData(){
+            listData.innerHTML=localStorage.getItem("data");
+        }
+
+        showData();
+
+    </script>
+</body>
+</html>
